@@ -55,13 +55,6 @@ class User{
 class UserRepository{
 
     public ?PDO $db = null;
-    
-    public function logger(){
-        var_dump($_POST);
-        $_POST['email'];
-        $_POST['pseudo'];
-        $_POST['mdp'];
-    }
 
     public function findByEmailAndPseudo(string $email, string $pseudo){
         $this->dbConnect($this);

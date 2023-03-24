@@ -95,7 +95,7 @@
        <?php }?>
        <?php if(!empty($_SESSION)) {?>
         <a class="me-3 py-2 btn btn-outline-secondary" href="admin/panier.php">Panier</a>
-       <a class="me-3 py-2 btn btn-outline-secondary" href="admin/logout.php">Log out</a>
+       <a class="me-3 py-2 btn btn-outline-secondary" href="?action=Logout">Log out</a>
         <?php }?>
     </div>
 

@@ -196,7 +196,7 @@ table.table td i {
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 text-dark text-decoration-none" href="../index.php">Accueil</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/">Accueil</a>
       </nav>
        <!--<a class="me-3 py-2 btn btn-outline-primary" href="admin/form_login">Login</a>
        <a class="me-3 py-2 btn btn-outline-primary" href="admin/form_signin">Sign In</a>-->
@@ -208,7 +208,7 @@ table.table td i {
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
-                    <center><button type="submit" onclick="document.location.href = 'ajouter.php';" class="btn btn-primary" name="valider" >Ajouter un nouveau produit</button><center>
+                    <center><button type="submit" onclick="document.location.href = '?admin=&action=AddProductForm';" class="btn btn-primary" name="valider" >Ajouter un nouveau produit</button><center>
                 </div>
                 <table class="table table-striped table-hover table-bordered">
                     <thead>

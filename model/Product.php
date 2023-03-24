@@ -6,6 +6,31 @@ class Product{
     public string $description;
     public int $prix;
     public Image $image;
+
+    public function createToInsert(array $productForm){
+        if(!isset($productForm['nom']) && $productForm['nom'] == ''){
+
+            return false;
+        }
+        if(!isset($productForm['desc']) && $productForm['desc'] == ''){
+
+            return false;
+        }
+        if(!isset($productForm['prix']) && $productForm['prix'] == 0){
+            
+            return false;
+        }
+        $image = new Image();
+
+        $this->name = $productForm['nom'];
+        $this->description = $productForm['desc'];
+        $this->prix = $productForm['prix'];
+        $this->image = $image->setImage();
+        $this->image->nom = $this->name;
+
+        
+        return true;
+    }
 }
 
 class ProductRepository{
@@ -48,9 +73,24 @@ class ProductRepository{
         	$products[] = $product;
 
     	}
-        
+
     	return $products;
-	} 
+	}
+    
+    public function insertProduct(Product $product){
+        $this->dbConnect($this);
+        $req = $this->db->prepare("INSERT INTO produits (nom, description, prix)
+        VALUES (?,?,?)");
+        $req->execute([
+            $product->name,
+            $product->description,
+            $product->prix,
+        ]);
+        $product->id = $this->db->lastInsertId();
+        $product->image->idProduct = $product->id;
+        $imageRepo = new ImageRepository();
+        $imageRepo->insertImage($product->image);
+    }
     
     function dbConnect(ProductRepository $ProductRepository){
         $user = "admin";
