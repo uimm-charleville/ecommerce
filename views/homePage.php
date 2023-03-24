@@ -68,7 +68,6 @@
     <!--<link href="pricing.css" rel="stylesheet">-->
   </head>
   <body>
-    
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="check" viewBox="0 0 16 16">
     <title>Check</title>
@@ -86,13 +85,13 @@
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <!--<a class="me-3 py-2 text-dark text-decoration-none" href="#">Accueil</a>-->
-        <?php  {if(!empty($_SESSION) && $_SESSION['id_role'] == 1)?>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="admin/admin.php">Admin</a>
+        <?php  if(!empty($_SESSION) && $_SESSION['id_role'] == 1){?>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="?admin=">Admin</a>
         <?php }?>
       </nav>
       <?php if(empty($_SESSION)) {?>
-       <a class="me-3 py-2 btn btn-outline-secondary" href="admin/form_login">Login</a>
-       <a class="me-3 py-2 btn btn-outline-secondary" href="admin/form_signin">Sign In</a>
+       <a class="me-3 py-2 btn btn-outline-secondary" href="<?= urldecode('?action=Login') ?>">Login</a>
+       <a class="me-3 py-2 btn btn-outline-secondary" href="?action=SignInForm">Sign In</a>
        <?php }?>
        <?php if(!empty($_SESSION)) {?>
         <a class="me-3 py-2 btn btn-outline-secondary" href="admin/panier.php">Panier</a>
@@ -107,7 +106,7 @@
       <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal"><?= $product->nom ?></h4>
+            <h4 class="my-0 fw-normal"><?= $product->name ?></h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"><?= $product->prix ?>€<small class="text-muted fw-light"></small></h1>

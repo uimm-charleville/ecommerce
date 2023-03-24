@@ -2,7 +2,7 @@
 require_once('Image.php');
 class Product{
     public int $id;
-    public string $nom;
+    public string $name;
     public string $description;
     public int $prix;
     public Image $image;
@@ -19,13 +19,13 @@ class ProductRepository{
         $statement->execute([$id]);
 
         $row = $statement->fetch();
-        $Product = new Product();
-        $Product->id = $row['id'];
-        $Product->nom = $row['nom'];
-        $Product->description = $row['description'];
-        $Product->prix = $row['prix'];
+        $product = new Product();
+        $product->id = $row['id'];
+        $product->name = $row['nom'];
+        $product->description = $row['description'];
+        $product->prix = $row['prix'];
 
-        return $Product;
+        return $product;
     }
 
     public function getProducts(): array
@@ -41,13 +41,14 @@ class ProductRepository{
             $imageRepo = new ImageRepository();
 
         	$product->id = $ProductEach['id'];
-        	$product->nom = $ProductEach['nom'];
+        	$product->name = $ProductEach['nom'];
         	$product->description = $ProductEach['description'];
         	$product->prix = $ProductEach['prix'];
             $product->image =  $imageRepo->getImageByIdProduct($product->id);
         	$products[] = $product;
-    	}
 
+    	}
+        
     	return $products;
 	} 
     
