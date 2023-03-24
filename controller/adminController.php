@@ -32,3 +32,11 @@ function addProduct(){
     }
 
 }
+
+function delProduct(){
+    var_dump($_POST['id']);
+    $productRepository = new ProductRepository; 
+    $imageRepository = new ImageRepository();
+    $imageRepository->deleteImageByIdProduct($_POST['id']);
+    $productRepository->deleteProductById($_POST['id']);
+}

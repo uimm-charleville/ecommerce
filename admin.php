@@ -11,6 +11,9 @@ if(isset($_GET['action']) && $_GET['action'] !== '') {
             case 'AddProduct':
                 addProduct();
                 break;
+            case 'delProduct':
+                delProduct();
+                break;
             default:
                 admin();
                 break;

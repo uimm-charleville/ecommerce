@@ -239,7 +239,7 @@ table.table td i {
                 </table>
             </div>
         </div> 
-            <center><button type="submit" onclick="document.location.href = '/';" class="btn btn-primary" name="valider" >Retour</button><center>        
+            <center><button type="submit" onclick="document.location.href = '/'" class="btn btn-primary" name="valider" >Retour</button><center>        
         </div>
         
 
@@ -262,12 +262,14 @@ $(document).ready(function(){
        bootbox.confirm("Voulez vous confirmé la suppression?", function (result){
         if(result){
             $.ajax({
-                url: 'traitement_ajax.php',
-                data: {action:"confirm_del",id:id},
+                url: '?admin=&action=delProduct',
+                data: {id:id},
                 type: 'post',
                 async:false,
 				success: function (data_retour)
 				{
+    
+
                     //alert(data_retour);
                     $(element).closest('tr').css('background', 'tomato');
                     $(element).closest('tr').fadeOut(800, function () {

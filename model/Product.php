@@ -91,6 +91,12 @@ class ProductRepository{
         $imageRepo = new ImageRepository();
         $imageRepo->insertImage($product->image);
     }
+
+    public function deleteProductById($idProduct){
+        $this->dbConnect($this);
+        $req = $this->db->prepare('DELETE FROM produits WHERE id = ?');
+        $req->execute([$idProduct]);
+    }
     
     function dbConnect(ProductRepository $ProductRepository){
         $user = "admin";

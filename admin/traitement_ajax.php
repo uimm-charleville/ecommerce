@@ -1,7 +1,7 @@
 <?php
 include '../config/connect_bdd.php';
 require '../config/functions.php';
-
+var_dump('test');
 $id = $_POST['id'];
 
 if(isset($_POST['action']) && $_POST['action'] == "confirm_del")

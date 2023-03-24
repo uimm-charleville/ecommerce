@@ -120,6 +120,13 @@ class ImageRepository{
             $image->idProduct,
         ]);
     }
+
+    public function deleteImageByIdProduct($idProduct){
+        $this->dbConnect($this);
+        $req = $this->db->prepare('DELETE FROM images WHERE id = ?');
+        $req->execute([$idProduct]);
+    }
+
     function dbConnect(ImageRepository $imageRepository){
         $user = "admin";
         $pass = "root";
