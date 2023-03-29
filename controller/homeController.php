@@ -60,3 +60,9 @@ function signin(){
         header('Location: /?action=SignInForm');
     }
 }
+
+function show(){
+    $idProduct = $_GET['idProduct'];
+    
+    require('views/show.php');
+}

@@ -14,6 +14,12 @@ if(isset($_GET['action']) && $_GET['action'] !== '') {
             case 'delProduct':
                 delProduct();
                 break;
+            case 'editProductForm':
+                editProductForm();
+                break;
+            case 'EditProduct':
+                editProduct();
+                break;
             default:
                 admin();
                 break;

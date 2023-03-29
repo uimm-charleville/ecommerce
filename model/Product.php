@@ -36,7 +36,7 @@ class Product{
 class ProductRepository{
     public ?PDO $db = null;
 
-    public function getProduct(int $id): Post
+    public function getProduct(int $id)
     {
         $this->dbConnect($this);
         $statement = $this->db->prepare(
@@ -44,11 +44,13 @@ class ProductRepository{
         $statement->execute([$id]);
 
         $row = $statement->fetch();
+        $imageRepo = new ImageRepository();
         $product = new Product();
         $product->id = $row['id'];
         $product->name = $row['nom'];
         $product->description = $row['description'];
         $product->prix = $row['prix'];
+        $product->image = $imageRepo->getImageByIdProduct($id);
 
         return $product;
     }
@@ -98,6 +100,24 @@ class ProductRepository{
         $req->execute([$idProduct]);
     }
     
+    function updateName($idProduct, $name){
+        $this->dbConnect($this);
+        $req = $this->db->prepare('UPDATE produits SET nom = ? WHERE id = ?');
+        $req->execute([$name,$idProduct]);
+    }
+
+    function updatePrice($idProduct, $price){
+        $this->dbConnect($this);
+        $req = $this->db->prepare('UPDATE produits SET prix = ? WHERE id = ?');
+        $req->execute([$price,$idProduct]);
+    }
+
+    function updateDesc($idProduct, $desc){
+        $this->dbConnect($this);
+        $req = $this->db->prepare('UPDATE produits SET description = ? WHERE id = ?');
+        $req->execute([$desc,$idProduct]);
+    }
+
     function dbConnect(ProductRepository $ProductRepository){
         $user = "admin";
         $pass = "root";
@@ -108,4 +128,6 @@ class ProductRepository{
             $ProductRepository->db =  new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         }
     }
+
+
 }

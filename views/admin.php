@@ -1,5 +1,4 @@
 <?php
-header('Content-type: text/html; charset=utf-8');
 
 ?>
 <!DOCTYPE html>
@@ -228,7 +227,7 @@ table.table td i {
                             <td><?= substr($product->description, 0,120); ?></td>
                             <td><?= $product->prix ?>€</td>
                             <td>
-                                <a href="update_produit.php?id=<?= $product->id ?>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <a href='?admin=&action=editProductForm&idProduct= <?= $product->id ?>' class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                 <!--<a href="del_produit.php?id=<?= $product->id ?>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                 <button class='delete btn btn-danger' id='del_<?= $id = $product->id ?>' data-id='<?= $id = $product->id ?>' onclick='confirm_del()' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
                                 <div id="select-modal" style="display:none;"><div id="confirmModal"></div></div>

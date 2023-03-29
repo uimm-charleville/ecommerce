@@ -18,6 +18,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '' && !isset($_GET['admin'])) 
     case 'SignIn':
       signin();
       break;
+    case 'Show':
+      show();
+      break;
     default:
       homepage();
       break;

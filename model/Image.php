@@ -123,7 +123,7 @@ class ImageRepository{
 
     public function deleteImageByIdProduct($idProduct){
         $this->dbConnect($this);
-        $req = $this->db->prepare('DELETE FROM images WHERE id = ?');
+        $req = $this->db->prepare('DELETE FROM images WHERE id_produit = ?');
         $req->execute([$idProduct]);
     }
 

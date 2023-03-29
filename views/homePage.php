@@ -113,7 +113,7 @@
             <img src=<?= $product->image->image?> height="200" width="180">
             <p class="card-text"><?= substr($product->description, 0,120); ?></p>
             <div class="btn-group">
-                <button type="button" onclick="document.location.href = 'admin/produit.php?id_produit=<?= $product->id ?>';" class="btn btn-sm btn-outline-secondary" name="valider">View</button>
+                <button type="button" onclick="document.location.href = '?action=Show&idProduct=<?= $product->id ?>';" class="btn btn-sm btn-outline-secondary" name="valider">View</button>
                 <!--<button type="button" onclick="document.location.href = 'admin/panier.php';" class="btn btn-sm btn-outline-secondary" name="acheter">Buy</button>-->
             </div>
             <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button> -->
