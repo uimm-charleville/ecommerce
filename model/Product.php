@@ -1,5 +1,8 @@
 <?php 
 require_once('Image.php');
+/** 
+* cette classe permet de mettre en place les produits 
+*/
 class Product{
     public int $id;
     public string $name;
@@ -7,7 +10,15 @@ class Product{
     public int $prix;
     public Image $image;
 
-    public function createToInsert(array $productForm){
+    /**
+    * Cette fonction prend en parametre un tableau venant d'un formulaire ($_post)
+    * @param array $productForm le tableau venant d'un formulaire
+    * @return bool si c'est pas bon retourne false sinon true
+    */
+    public function createToInsert(array $productForm):bool{
+        if (empty($productForm)){
+            return false;
+        }
         if(!isset($productForm['nom']) && $productForm['nom'] == ''){
 
             return false;
@@ -21,22 +32,30 @@ class Product{
             return false;
         }
         $image = new Image();
-
+        $image->setImage();
         $this->name = $productForm['nom'];
         $this->description = $productForm['desc'];
         $this->prix = $productForm['prix'];
-        $this->image = $image->setImage();
+        $this->image = $image;
         $this->image->nom = $this->name;
 
         
         return true;
     }
 }
-
+/**
+* cette classe permet de gerer les produits en base de donnée 
+*/
 class ProductRepository{
     public ?PDO $db = null;
 
-    public function getProduct(int $id)
+    /**
+    * Cette fonction va retourner un produit de la base de donnée trouvé par son id
+    * @param int $id un id de produit
+    * @return Product le produit venant de la base de donée
+    * 
+    */
+    public function getProduct(int $id): Product
     {
         $this->dbConnect($this);
         $statement = $this->db->prepare(
@@ -55,6 +74,10 @@ class ProductRepository{
         return $product;
     }
 
+    /**
+    * Cette fonction va retourner une collection produit de la base de donnée
+    * @return array notre collection de produits 
+    */
     public function getProducts(): array
 	{
     	$this->dbConnect($this);
@@ -78,8 +101,12 @@ class ProductRepository{
 
     	return $products;
 	}
-    
-    public function insertProduct(Product $product){
+
+    /**
+    * Cette fonction insert le produit en paramètre dans la base de donnée 
+    * @param Product $product le produit a insérer dans la base de donnée
+    */
+    public function insertProduct(Product $product):void{
         $this->dbConnect($this);
         $req = $this->db->prepare("INSERT INTO produits (nom, description, prix)
         VALUES (?,?,?)");
@@ -94,31 +121,53 @@ class ProductRepository{
         $imageRepo->insertImage($product->image);
     }
 
-    public function deleteProductById($idProduct){
+    /**
+    * Cette fonction delete un produit de la base de donnée identifié par son id 
+    * @param int $idProduct l'id du produit a supprimer de la base de donnée
+    */
+    public function deleteProductById(int $idProduct):void{
         $this->dbConnect($this);
         $req = $this->db->prepare('DELETE FROM produits WHERE id = ?');
         $req->execute([$idProduct]);
     }
-    
-    function updateName($idProduct, $name){
+
+    /**
+    * Cette fonction modifie le nom d'un produit de la base de donnée identifié par son id 
+    * @param int $idProduct l'id du produit a modifier de la base de donnée
+    * @param string $name le nouveau nom du produit
+    */
+    function updateName(int $idProduct,string $name): void{
         $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET nom = ? WHERE id = ?');
         $req->execute([$name,$idProduct]);
     }
-
-    function updatePrice($idProduct, $price){
+    /**
+    * Cette fonction modifie le prix d'un produit de la base de donnée identifié par son id 
+    * @param int $idProduct l'id du produit a modifier de la base de donnée
+    * @param float $price le nouveau prix du produit
+    */
+    function updatePrice(int $idProduct, int $price):void{
         $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET prix = ? WHERE id = ?');
         $req->execute([$price,$idProduct]);
     }
 
-    function updateDesc($idProduct, $desc){
+    /**
+    * Cette fonction modifie la description d'un produit de la base de donnée identifié par son id 
+    * @param int $idProduct l'id du produit a modifier de la base de donnée
+    * @param string $desc la nouvelle description du produit
+    */
+    function updateDesc(int $idProduct, string $desc):void{
         $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET description = ? WHERE id = ?');
         $req->execute([$desc,$idProduct]);
     }
-
-    function dbConnect(ProductRepository $ProductRepository){
+    
+    /**
+    * Cette fonction permet de se connecter a la base de donnée
+    * @param ProductRepository $ProductRepository notre repository
+    */
+    function dbConnect(ProductRepository $ProductRepository):void{
         $user = "admin";
         $pass = "root";
         $host = "database";

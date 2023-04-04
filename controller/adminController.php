@@ -1,7 +1,7 @@
 <?php
 require_once('model/Product.php');
 
-function admin(){
+function admin(): void{
     $productRepository = new ProductRepository();
 	$products = $productRepository->getProducts();
 
@@ -13,7 +13,7 @@ function admin(){
     
 }
 
-function addProductForm(){
+function addProductForm():void{
     if(!empty($_SESSION) && $_SESSION['id_role'] == 1){
         require_once('views/addProduct.php');
     }else{
@@ -21,7 +21,7 @@ function addProductForm(){
     }
 }
 
-function addProduct(){
+function addProduct():void{
     $product = new Product();
     if($product->createToInsert($_POST)){
         $productRepository = new ProductRepository();
@@ -33,7 +33,7 @@ function addProduct(){
 
 }
 
-function delProduct(){
+function delProduct():void{
     var_dump($_POST['id']);
     $productRepository = new ProductRepository; 
     $imageRepository = new ImageRepository();
@@ -41,13 +41,13 @@ function delProduct(){
     $productRepository->deleteProductById($_POST['id']);
 }
 
-function editProductForm(){
+function editProductForm():void{
     $productRepo = new ProductRepository();
     $product = $productRepo->getProduct($_GET['idProduct']);
     require_once('views/editProduct.php');
 }
 
-function editProduct(){
+function editProduct():void{
     $idProduct = $_GET['idProduct'];
     $imageRepository = new ImageRepository;
     $productRepository = new ProductRepository;

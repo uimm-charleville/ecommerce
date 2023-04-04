@@ -1,11 +1,17 @@
 <?php
+/** 
+* cette classe permet de mettre en place les Images 
+*/
 class Image{
     public int $id;
     public string $nom;
     public string $image;
-    public int $idProduit;
+    public int $idProduct;
 
-    public function setImage(){
+    /** 
+    * cette function permet de créer l'objet image a inserer par la suite 
+    */
+    public function setImage(): void{
         $path = 'upload/';
         if(!empty($_FILES['image']))
         {
@@ -32,7 +38,6 @@ class Image{
                         {
                             $this->nom = '';
                             $this->image=$image;
-                            return $this;
                             echo "upload  effectué !";
                         }
                         else
@@ -55,62 +60,41 @@ class Image{
                 echo "Type non autorisé !";
             }
         }
-    
-        $nom_image = $_POST['nom'];
-    
-        if(isset($_POST['valider']))
-        {
-            if(isset($_POST['nom']) && isset($image) && isset($_POST['desc']) && isset($_POST['prix']))
-            {
-                if(!empty($_POST['nom']) && !empty($image) && !empty($_POST['desc']) && !empty($_POST['prix']))
-                {
-                    $nom = htmlspecialchars(strip_tags($_POST['nom']));
-                    $desc = htmlspecialchars(strip_tags($_POST['desc']));
-                    $prix = htmlspecialchars(strip_tags($_POST['prix']));
-    
-                    try {
-                            add_product($nom, $desc, $prix);
-    
-                        } catch (Exception $e) {
-                            die('Erreur : '.$e->getMessage());
-                        }              
-    
-                    try {
-                            $tab_id = last_id();
-                            
-                            $id = $tab_id[0][0];
-                            add_image($nom_image, $image, $id);
-                            header('location: admin.php');
-    
-                        } catch (Exception $e) {
-                            die('Erreur : '.$e->getMessage());
-                        }
-                }
-            }
-        }
-    
     }
 }
 
+/**
+* cette classe permet de gerer les Images en base de donnée 
+*/
 class ImageRepository{
     public ?PDO $db = null;
     
-    function getImageByIdProduct(int $idProduit){
+    /**
+    * Cette fonction va retourner une image de la base de donnée trouvé par un id de produit
+    * @param int $idProduct un id de produit
+    * @return Image l'objet image constuit via les données de la base de donnée
+    */
+    function getImageByIdProduct(int $idProduct): Image{
         $this->dbConnect($this);
         $statement = $this->db->prepare(
             "SELECT * FROM images WHERE id_produit = ?");
-        $statement->execute([$idProduit]);
+        $statement->execute([$idProduct]);
         $resReq = $statement->fetch();
         $image = new Image();
         $image->id = $resReq['id'];
         $image->nom = $resReq['nom'];
         $image->image = $resReq['image'];
-        $image->idProduit = $resReq['id_produit'];
+        $image->idProduct = $resReq['id_produit'];
 
         return $image;
     }
 
-    function insertImage(Image $image){
+
+    /**
+    * Cette fonction insert l'image en paramètre dans la base de donnée 
+    * @param Image $image l'image a insérer dans la base de donnée
+    */
+    function insertImage(Image $image): void{
         $this->dbConnect($this);
         $req = $this->db->prepare('INSERT INTO images (nom, image, id_produit)
         VALUE (?,?,?)');
@@ -120,14 +104,23 @@ class ImageRepository{
             $image->idProduct,
         ]);
     }
+    
+    /**
+    * Cette fonction delete une Image lié a un produit de la base de donnée identifié par un id de produit
+    * @param int $idProduct l'id du produit du quel l'image sera supprimé 
+    */
 
-    public function deleteImageByIdProduct($idProduct){
+    public function deleteImageByIdProduct(int $idProduct):void{
         $this->dbConnect($this);
         $req = $this->db->prepare('DELETE FROM images WHERE id_produit = ?');
         $req->execute([$idProduct]);
     }
 
-    function dbConnect(ImageRepository $imageRepository){
+    /**
+    * Cette fonction permet de se connecter a la base de donnée
+    * @param ImageRepository $imageRepository notre repository
+    */
+    function dbConnect(ImageRepository $imageRepository): void{
         $user = "admin";
         $pass = "root";
         $host = "database";

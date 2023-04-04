@@ -3,7 +3,7 @@ session_start();
 require_once('model/Product.php');
 require_once('model/User.php');
 
-function homepage()
+function homepage():void
 {   
 	$productRepository = new ProductRepository();
 	$products = $productRepository->getProducts();
@@ -11,11 +11,11 @@ function homepage()
 	require('views/homePage.php');
 }
 
-function login(){
+function login():void{
     require ('views/login.php');
 }
 
-function logger(){
+function logger():void{
     $userRepository = new UserRepository();
     $user = $userRepository->findByEmailAndPseudo($_POST['email'],$_POST['pseudo']);
     if($user != []){
@@ -35,16 +35,16 @@ function logger(){
     }
 }
 
-function logout(){
+function logout():void{
     session_destroy();
     header('Location: /');
 }
 
-function signinform(){
+function signinform():void{
     require('views/signin.php');
 }
 
-function signin(){
+function signin():void{
     $userRepository = new UserRepository();
     $user = $userRepository->findByEmailAndPseudo($_POST['email'],$_POST['pseudo']);
     if($user == []){
@@ -61,7 +61,7 @@ function signin(){
     }
 }
 
-function show(){
+function show():void{
     $idProduct = $_GET['idProduct'];
     
     require('views/show.php');

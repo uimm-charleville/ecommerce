@@ -1,4 +1,7 @@
 <?php
+/** 
+* cette classe permet de mettre en place les users
+*/
 class User{
     public int $id;
     public string $name;
@@ -8,17 +11,13 @@ class User{
     public string $mdp;
     public int $idRole;
 
-    // public function __construct(string $name, string $firstname, string $email, string $pseudo, string $mdp, int $idRole){
-    //     $this->id = $userDb['id'];
-    //     $this->name = $userDb['nom'];
-    //     $this->firstName = $userDb['prenom'];
-    //     $this->email = $userDb['email'];
-    //     $this->pseudo = $userDb['pseudo'];
-    //     $this->mdp = $userDb['mdp'];
-    //     $this->idRole = $userDb['id_role'];
-    // }
 
-    public function createToSignin(array $userForm){
+    /**
+    * Cette fonction prend en parametre un tableau venant d'un formulaire ($_post)
+    * @param array $userForm le tableau venant d'un formulaire
+    * @return bool si c'est pas bon retourne false sinon true
+    */
+    public function createToSignin(array $userForm):bool{
         if(!isset($userForm['nom']) && $userForm['nom'] == ''){
 
             return false;
@@ -52,11 +51,22 @@ class User{
 
 }
 
+/**
+* cette classe permet de gerer les users en base de donnée 
+*/
 class UserRepository{
 
     public ?PDO $db = null;
 
-    public function findByEmailAndPseudo(string $email, string $pseudo){
+    /**
+    * Cette fonction va retourner un user de la base de donnée trouvé par son email et son pseuudo
+    * Si on trouve un user on retouurne un type user sinon un tableau vide
+    * @param string $email un email
+    * @param string $pseudo un pseudo
+    * @return User le user venant de la base de donée
+    * @return array tableau vide si aucun user est trouvé
+    */
+    public function findByEmailAndPseudo(string $email, string $pseudo):User|array{
         $this->dbConnect($this);
         $req = $this->db->prepare("SELECT * FROM users WHERE email = ? AND pseudo = ?");
         $req->execute([$email,$pseudo]);
@@ -76,6 +86,10 @@ class UserRepository{
         }
     }
 
+    /**
+    * Cette fonction insert le user en paramètre dans la base de donnée 
+    * @param User $user le user a insérer dans la base de donnée
+    */
     public function insertUser(User $user){
         $this->dbConnect($this);
         $req = $this->db->prepare("INSERT INTO users (nom, prenom, email, pseudo, mdp, id_role)
@@ -90,6 +104,10 @@ class UserRepository{
         ]);
     }
 
+    /**
+    * Cette fonction permet de se connecter a la base de donnée
+    * @param UserRepository $userRepository notre repository
+    */
     function dbConnect(UserRepository $userRepository){
         $user = "admin";
         $pass = "root";
