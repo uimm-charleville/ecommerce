@@ -1,15 +1,19 @@
 <?php 
 require_once('Image.php');
+require_once('Connect.php');
 /** 
 * cette classe permet de mettre en place les produits 
 */
-class Product{
+class Product extends Connect{
     public int $id;
     public string $name;
     public string $description;
     public int $prix;
     public Image $image;
 
+    public function __construct(){
+        parent::__construct();
+    }
     /**
     * Cette fonction prend en parametre un tableau venant d'un formulaire ($_post)
     * @param array $productForm le tableau venant d'un formulaire
@@ -46,8 +50,10 @@ class Product{
 /**
 * cette classe permet de gerer les produits en base de donnée 
 */
-class ProductRepository{
-    public ?PDO $db = null;
+class ProductRepository extends Connect{
+    public function __construct(){
+        parent::__construct();
+    }
 
     /**
     * Cette fonction va retourner un produit de la base de donnée trouvé par son id
@@ -57,7 +63,6 @@ class ProductRepository{
     */
     public function getProduct(int $id): Product
     {
-        $this->dbConnect($this);
         $statement = $this->db->prepare(
             "SELECT * FROM produits WHERE id = ?");
         $statement->execute([$id]);
@@ -80,7 +85,6 @@ class ProductRepository{
     */
     public function getProducts(): array
 	{
-    	$this->dbConnect($this);
     	$statement = $this->db->prepare(
         	"SELECT * FROM produits");
         $statement->execute();
@@ -107,7 +111,6 @@ class ProductRepository{
     * @param Product $product le produit a insérer dans la base de donnée
     */
     public function insertProduct(Product $product):void{
-        $this->dbConnect($this);
         $req = $this->db->prepare("INSERT INTO produits (nom, description, prix)
         VALUES (?,?,?)");
         $req->execute([
@@ -126,7 +129,6 @@ class ProductRepository{
     * @param int $idProduct l'id du produit a supprimer de la base de donnée
     */
     public function deleteProductById(int $idProduct):void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('DELETE FROM produits WHERE id = ?');
         $req->execute([$idProduct]);
     }
@@ -137,7 +139,6 @@ class ProductRepository{
     * @param string $name le nouveau nom du produit
     */
     function updateName(int $idProduct,string $name): void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET nom = ? WHERE id = ?');
         $req->execute([$name,$idProduct]);
     }
@@ -147,7 +148,6 @@ class ProductRepository{
     * @param float $price le nouveau prix du produit
     */
     function updatePrice(int $idProduct, int $price):void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET prix = ? WHERE id = ?');
         $req->execute([$price,$idProduct]);
     }
@@ -158,25 +158,7 @@ class ProductRepository{
     * @param string $desc la nouvelle description du produit
     */
     function updateDesc(int $idProduct, string $desc):void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('UPDATE produits SET description = ? WHERE id = ?');
         $req->execute([$desc,$idProduct]);
     }
-    
-    /**
-    * Cette fonction permet de se connecter a la base de donnée
-    * @param ProductRepository $ProductRepository notre repository
-    */
-    function dbConnect(ProductRepository $ProductRepository):void{
-        $user = "admin";
-        $pass = "root";
-        $host = "database";
-        $port = '3306';
-        $db = "projet_poo";
-        if ($ProductRepository->db === null) {
-            $ProductRepository->db =  new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        }
-    }
-
-
 }

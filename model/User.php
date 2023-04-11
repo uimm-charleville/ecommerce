@@ -1,4 +1,5 @@
 <?php
+require_once('Connect.php');
 /** 
 * cette classe permet de mettre en place les users
 */
@@ -10,6 +11,7 @@ class User{
     public string $pseudo;
     public string $mdp;
     public int $idRole;
+
 
 
     /**
@@ -54,9 +56,11 @@ class User{
 /**
 * cette classe permet de gerer les users en base de donnée 
 */
-class UserRepository{
+class UserRepository extends Connect{
 
-    public ?PDO $db = null;
+    public function __construct(){
+        parent::__construct();
+    }
 
     /**
     * Cette fonction va retourner un user de la base de donnée trouvé par son email et son pseuudo
@@ -67,7 +71,6 @@ class UserRepository{
     * @return array tableau vide si aucun user est trouvé
     */
     public function findByEmailAndPseudo(string $email, string $pseudo):User|array{
-        $this->dbConnect($this);
         $req = $this->db->prepare("SELECT * FROM users WHERE email = ? AND pseudo = ?");
         $req->execute([$email,$pseudo]);
         $userDb = $req->fetch();
@@ -91,7 +94,6 @@ class UserRepository{
     * @param User $user le user a insérer dans la base de donnée
     */
     public function insertUser(User $user){
-        $this->dbConnect($this);
         $req = $this->db->prepare("INSERT INTO users (nom, prenom, email, pseudo, mdp, id_role)
         VALUES (?,?,?,?,?,?)");
         $req->execute([
@@ -102,20 +104,5 @@ class UserRepository{
             $user->mdp,
             2
         ]);
-    }
-
-    /**
-    * Cette fonction permet de se connecter a la base de donnée
-    * @param UserRepository $userRepository notre repository
-    */
-    function dbConnect(UserRepository $userRepository){
-        $user = "admin";
-        $pass = "root";
-        $host = "database";
-        $port = '3306';
-        $db = "projet_poo";
-        if ($userRepository->db === null) {
-            $userRepository->db =  new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        }
     }
 }

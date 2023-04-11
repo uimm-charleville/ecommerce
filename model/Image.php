@@ -1,4 +1,5 @@
 <?php
+require_once('Connect.php');
 /** 
 * cette classe permet de mettre en place les Images 
 */
@@ -26,7 +27,7 @@ class Image{
     
             $extension = explode('.', $nameFile);
     
-            $max_size =500000;
+            $max_size =5000000;
     
             if(in_array($typeFile, $type))
             {
@@ -66,16 +67,17 @@ class Image{
 /**
 * cette classe permet de gerer les Images en base de donnée 
 */
-class ImageRepository{
-    public ?PDO $db = null;
+class ImageRepository extends Connect{
     
+    public function __construct(){
+        parent::__construct();
+    }
     /**
     * Cette fonction va retourner une image de la base de donnée trouvé par un id de produit
     * @param int $idProduct un id de produit
     * @return Image l'objet image constuit via les données de la base de donnée
     */
     function getImageByIdProduct(int $idProduct): Image{
-        $this->dbConnect($this);
         $statement = $this->db->prepare(
             "SELECT * FROM images WHERE id_produit = ?");
         $statement->execute([$idProduct]);
@@ -95,7 +97,6 @@ class ImageRepository{
     * @param Image $image l'image a insérer dans la base de donnée
     */
     function insertImage(Image $image): void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('INSERT INTO images (nom, image, id_produit)
         VALUE (?,?,?)');
         $req->execute([
@@ -111,23 +112,7 @@ class ImageRepository{
     */
 
     public function deleteImageByIdProduct(int $idProduct):void{
-        $this->dbConnect($this);
         $req = $this->db->prepare('DELETE FROM images WHERE id_produit = ?');
         $req->execute([$idProduct]);
-    }
-
-    /**
-    * Cette fonction permet de se connecter a la base de donnée
-    * @param ImageRepository $imageRepository notre repository
-    */
-    function dbConnect(ImageRepository $imageRepository): void{
-        $user = "admin";
-        $pass = "root";
-        $host = "database";
-        $port = '3306';
-        $db = "projet_poo";
-        if ($imageRepository->db === null) {
-            $imageRepository->db =  new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        }
     }
 }
