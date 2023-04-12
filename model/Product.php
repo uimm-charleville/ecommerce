@@ -1,6 +1,6 @@
 
 <?php
-require_once('config/Connect_bdd.php');
+require_once('config/Connect_bddClass.php');
 class Product{
     public $id;
     public $nom;
