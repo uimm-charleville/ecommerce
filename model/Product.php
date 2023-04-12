@@ -1,4 +1,3 @@
-
 <?php
 require_once('config/Connect_bddClass.php');
 require_once('model/Image.php');

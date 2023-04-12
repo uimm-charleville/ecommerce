@@ -65,7 +65,7 @@
   </head>
 
   <body class="text-center">
-    <form action="login.php" class="form-signin" method="POST">
+    <form action="?action=LoginTraitement" class="form-signin" method="POST">
       <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
       <label for="inputEmail" class="sr-only ">Adresse mail</label>
       <input type="email" id="inputEmail" class="form-control" placeholder="Entrer votre email" name="email" required autofocus>
