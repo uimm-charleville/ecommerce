@@ -1,7 +1,3 @@
-<?php
-session_start();
-header('Content-type: text/html; charset=utf-8');
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -81,7 +77,7 @@ header('Content-type: text/html; charset=utf-8');
         <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
       </div>
        <div>
-          <center><button type="submit" onclick="document.location.href = '../index.php';" class="btn btn-primary" name="valider">Retour</button><center>
+          <center><button type="submit" onclick="document.location.href = '/';" class="btn btn-primary" name="valider">Retour</button><center>
       </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

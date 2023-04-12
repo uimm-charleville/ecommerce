@@ -93,7 +93,7 @@
         <?php }?>
       </nav>
       <?php if(empty($_SESSION)) {?>
-       <a class="me-3 py-2 btn btn-outline-secondary" href="admin/form_login">Login</a>
+       <a class="me-3 py-2 btn btn-outline-secondary" href="?action=LoginForm">Login</a>
        <a class="me-3 py-2 btn btn-outline-secondary" href="admin/form_signin">Sign In</a>
        <?php }?>
        <?php if(!empty($_SESSION)) {?>
