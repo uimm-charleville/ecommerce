@@ -113,7 +113,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"><?= $produit->prix ?>€<small class="text-muted fw-light"></small></h1>
-            <img src="<?php echo substr($produit->image, 1); ?>" height="200" width="180">
+            <img src="<?php echo substr($produit->image->image, 1); ?>" height="200" width="180">
             <p class="card-text"><?= substr($produit->description, 0,120); ?></p>
             <div class="btn-group">
                 <button type="button" onclick="document.location.href = 'admin/produit.php?id_produit=<?= $produit->id ?>';" class="btn btn-sm btn-outline-secondary" name="valider">View</button>

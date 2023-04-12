@@ -9,5 +9,7 @@ if (isset($_GET['action']) && $_GET['action'] !== '' && !isset($_GET['admin'])) 
             homepage();
             break;
     }
+}else{
+    homepage();
 }
 ?>
