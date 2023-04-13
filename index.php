@@ -9,6 +9,12 @@ if (isset($_GET['action']) && $_GET['action'] !== '' && !isset($_GET['admin'])) 
         case 'LoginTraitement':
             login();
             break;
+        case 'SignInForm':
+            signInForm();
+            break;
+        case 'SignInTraitement':
+            signIn();
+            break;
         default:
             homepage();
             break;

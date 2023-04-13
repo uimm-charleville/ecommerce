@@ -1,9 +1,3 @@
-<?php
-session_start();
-header('Content-type: text/html; charset=utf-8');
-?>
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -71,7 +65,7 @@ header('Content-type: text/html; charset=utf-8');
   </head>
 
   <body class="text-center">
-    <form action="signin.php" class="form-signin" method="post">
+    <form action="?action=SignInTraitement" class="form-signin" method="post">
       <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
       <label for="inputLastName" class="sr-only ">Nom de l'utlisateur</label>
       <input type="name" id="inputLastName" class="form-control" placeholder="Entrer votre nom" name="nom" required autofocus>
@@ -97,7 +91,7 @@ header('Content-type: text/html; charset=utf-8');
         <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
       </div>
         <div>
-          <center><button type="submit" onclick="document.location.href = '../index.php';" class="btn btn-primary" name="valider">Retour</button><center>
+          <center><button type="submit" onclick="document.location.href = '/';" class="btn btn-primary" name="valider">Retour</button><center>
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

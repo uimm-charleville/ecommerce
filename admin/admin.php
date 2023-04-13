@@ -231,7 +231,7 @@ table.table td i {
                     <tbody>
                         <tr>
                             <td><?= $produit->nom ?></td>
-                            <td><img src="<?php echo $produit->image ?>" height="50" width="50"></td>
+                            <td><img src="<?php echo $produit->image->image ?>" height="50" width="50"></td>
                             <td><?= substr($produit->description, 0,120); ?></td>
                             <td><?= $produit->prix ?>€</td>
                             <td>

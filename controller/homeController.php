@@ -22,12 +22,40 @@ function login(){
     $user = $userRepo->getUserByEmailAndPseudo($_POST['email'],$_POST['pseudo']);
     if($user != []){
         if(password_verify($_POST['mdp'],$user->mdp)){
-            $_SESSION['id_role'] = $user;
+            $_SESSION['id_role'] = $user->id_role;
         }else{
             header('Location: /?action=LoginForm');
         }
     }else{
         header('Location: ?action=LoginForm');
     }
-}   
+} 
+
+function signInForm(){
+    if(key_exists('id_role',$_SESSION)){
+        // header('Location: /?action=LoginForm');
+        echo 'allez a ladmin';
+    }else{
+        require('view/form_signin.php');
+    }
+}
+
+function signIn(){
+    $userRepo = new UserRepository();
+    $user = new User();
+    if($user->createToSignin($_POST)){
+        // le user est créé sans attributs vide
+        $userTmp = $userRepo->getUserByEmailAndPseudo($_POST['email'],$_POST['pseudo']);
+        if($userTmp == []){
+            $user->mdp = password_hash($user->mdp,PASSWORD_BCRYPT);
+            $userRepo->inserUser($user);
+            header('Location: ?action=LoginForm');
+        }else{
+            header('Location: ?action=SignInForm');
+        }
+    }else{
+        header('Location: ?action=SignInForm');
+    }
+    
+}
 ?>
