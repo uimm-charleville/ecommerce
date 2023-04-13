@@ -1,13 +1,3 @@
-<?php
-session_start();
-if($_SESSION['id_role'] != 1)
-{
-    header('location: form_login.php');
-}
-header('Content-type: text/html; charset=utf-8');
-require '../config/functions.php';
-$Produits = view_product();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

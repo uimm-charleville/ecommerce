@@ -113,7 +113,7 @@ class UserRepository extends Connect_bdd{
         }
     }
 
-    public function inserUser(User $user){
+    public function insertUser(User $user){
         $req = $this->bdd->prepare("INSERT INTO users (nom, prenom, email, pseudo, mdp, id_role)
         VALUES (?,?,?,?,?,?)");
         $req->execute([

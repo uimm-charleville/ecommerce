@@ -1,5 +1,3 @@
-<?php
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -88,7 +86,7 @@
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <!--<a class="me-3 py-2 text-dark text-decoration-none" href="#">Accueil</a>-->
         <?php  {if(!empty($_SESSION) && $_SESSION['id_role'] == 1)?>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="admin/admin.php">Admin</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="?admin=&action=admin">Admin</a>
         <?php }?>
       </nav>
       <?php if(empty($_SESSION)) {?>
