@@ -45,15 +45,23 @@ function signIn(){
     $user = new User();
     if($user->createToSignin($_POST)){
         // le user est créé sans attributs vide
-        $userTmp = $userRepo->getUserByEmailAndPseudo($_POST['email'],$_POST['pseudo']);
-        if($userTmp == []){
-            $user->mdp = password_hash($user->mdp,PASSWORD_BCRYPT);
-            $userRepo->inserUser($user);
-            header('Location: ?action=LoginForm');
+        $userTmpEmail = $userRepo->getUserByEmail($_POST['email']);
+        $userTmpPseudo = $userRepo->getUserByEmail($_POST['pseudo']);
+        if($userTmpEmail == []){
+            if($userTmpPseudo == []) {
+                $user->mdp = password_hash($user->mdp, PASSWORD_BCRYPT);
+                $userRepo->inserUser($user);
+                header('Location: ?action=LoginForm');
+            }else{
+                //pseudo deja existant
+                header('Location: ?action=SignInForm');
+            }   
         }else{
+            //email deja existant
             header('Location: ?action=SignInForm');
         }
     }else{
+        // champ vide 
         header('Location: ?action=SignInForm');
     }
     
