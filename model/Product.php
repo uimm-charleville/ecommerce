@@ -60,6 +60,21 @@ class ProductRepository extends Connect_bdd{
         return $products;
     }
 
+    public function getProduct($idProduit){
+        $req = $this->bdd->prepare('SELECT * FROM produits WHERE id = ?');
+        $req->execute([$idProduit]);
+        $dataProd = $req->fetch();
+        $produit = new Product();
+        $imageRepo = new ImageRepository();
+        $produit->id = $dataProd['id'];
+        $produit->description = $dataProd['description'];
+        $produit->nom = $dataProd['nom'];
+        $produit->prix = $dataProd['prix'];
+        $produit->image = $imageRepo->getImageByProductId($idProduit);
+
+        return $produit;
+    }
+
     public function insertProduct($produit){
         $req = $this->bdd->prepare("INSERT INTO produits (nom, description, prix)
         VALUES (?,?,?)");
@@ -71,8 +86,21 @@ class ProductRepository extends Connect_bdd{
         $produit->image->idProduct = $this->bdd->lastInsertId();   
         $imageRepo = new ImageRepository();
         $imageRepo->insertImage($produit->image);
+    }
 
+    function updateNom(int $idProduct,string $name): void{
+        $req = $this->bdd->prepare('UPDATE produits SET nom = ? WHERE id = ?');
+        $req->execute([$name,$idProduct]);
+    }
 
+    function updateDesc(int $idProduct,string $desc): void{
+        $req = $this->bdd->prepare('UPDATE produits SET description = ? WHERE id = ?');
+        $req->execute([$desc,$idProduct]);
+    }
+
+    function updatePrice(int $idProduct, $prix): void{
+        $req = $this->bdd->prepare('UPDATE produits SET prix = ? WHERE id = ?');
+        $req->execute([$prix,$idProduct]);
     }
 }
 ?>

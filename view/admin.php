@@ -225,7 +225,7 @@ table.table td i {
                             <td><?= substr($produit->description, 0,120); ?></td>
                             <td><?= $produit->prix ?>€</td>
                             <td>
-                                <a href="update_produit.php?id=<?= $produit->id ?>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <a href="?admin=&action=updateProductForm&idProduct=<?= $produit->id ?>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                 <!--<a href="del_produit.php?id=<?= $produit->id ?>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                 <button class='delete btn btn-danger' id='del_<?= $id = $produit->id ?>' data-id='<?= $id = $produit->id ?>' onclick='confirm_del()' title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
                                 <div id="select-modal" style="display:none;"><div id="confirmModal"></div></div>

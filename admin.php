@@ -7,6 +7,12 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'addProductForm':
             addProductForm();
             break;
+        case 'updateProductForm':
+            updateProductForm();
+            break;
+        case 'updateProduct':
+            updateProduct();
+            break;
         default:
             admin();
             break;

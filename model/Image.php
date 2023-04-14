@@ -88,5 +88,10 @@ class ImageRepository extends Connect_bdd{
             $image->idProduct,
         ]);
     }
+
+    public function deleteImageByIdProduct($idProduit){
+        $req = $this->bdd->prepare('DELETE FROM images WHERE id_produit = ?');
+        $req->execute([$idProduit]);
+    }
 }
 ?>
