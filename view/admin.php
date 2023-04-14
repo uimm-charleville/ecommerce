@@ -204,7 +204,7 @@ table.table td i {
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
-                    <center><button type="submit" onclick="document.location.href = 'ajouter.php';" class="btn btn-primary" name="valider" >Ajouter un nouveau produit</button><center>
+                    <center><button type="submit" onclick="document.location.href = '?admin=&action=addProductForm';" class="btn btn-primary" name="valider" >Ajouter un nouveau produit</button><center>
                 </div>
                 <table class="table table-striped table-hover table-bordered">
                     <thead>

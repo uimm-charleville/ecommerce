@@ -10,8 +10,7 @@ function homepage(){
 
 function loginForm(){
     if(key_exists('id_role',$_SESSION)){
-        // header('Location: /?action=LoginForm');
-        echo 'allez a ladmin';
+        header('Location: /?admin=&action=');
     }else{
         require('view/form_login.php');
     }
@@ -23,6 +22,7 @@ function login(){
     if($user != []){
         if(password_verify($_POST['mdp'],$user->mdp)){
             $_SESSION['id_role'] = $user->id_role;
+            header('Location: /?admin=&action=');
         }else{
             header('Location: /?action=LoginForm');
         }

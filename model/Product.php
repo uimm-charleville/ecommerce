@@ -8,6 +8,30 @@ class Product{
     public $prix;
     public $image;
 
+    public function createToInsert(array $productForm):bool{
+        if(!isset($productForm['nom']) OR $productForm['nom'] == ''){
+
+            return false;
+        }
+        if(!isset($productForm['desc']) OR $productForm['desc'] == ''){
+
+            return false;
+        }
+        if(!isset($productForm['prix']) or $productForm['prix'] == '') {
+
+            return false;
+        }
+
+        $image = new Image();
+        $image->setImage();
+        $this->nom = $productForm['nom'];
+        $this->description = $productForm['desc'];
+        $this->prix = $productForm['prix'];
+        $this->image = $image;
+
+        return true;
+    }
+
 }
 
 
@@ -34,6 +58,21 @@ class ProductRepository extends Connect_bdd{
             $products[] = $product;
         } 
         return $products;
+    }
+
+    public function insertProduct($produit){
+        $req = $this->bdd->prepare("INSERT INTO produits (nom, description, prix)
+        VALUES (?,?,?)");
+        $req->execute([
+            $produit->nom,
+            $produit->description,
+            $produit->prix
+        ]);
+        $produit->image->idProduct = $this->bdd->lastInsertId();   
+        $imageRepo = new ImageRepository();
+        $imageRepo->insertImage($produit->image);
+
+
     }
 }
 ?>
